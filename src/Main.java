@@ -3,13 +3,15 @@ public class Main {
 
     public static void main(String[] args) {
         // Creazione colonnine della stazione di ricarica
+        Colonnina c0 = new Colonnina("C0", "Type 2", 22, false); // Colonnina con connettore Type2 e potenza massima 22 Kw
         Colonnina c1 = new Colonnina("C1", "Type 2", 22, true); // Colonnina con connettore Type2 e potenza massima 22 Kw
-        Colonnina c2 = new Colonnina("C2", "CCS", 50, false); // Colonnina con connettore CCS e potenza massima 50 Kw (non disponibile)
+        Colonnina c2 = new Colonnina("C2", "CCS", 50, true); // Colonnina con connettore CCS e potenza massima 50 Kw (non disponibile)
         Colonnina c3 = new Colonnina("C3", "CHAdeMO", 100, true); // Colonnina con connettore CHAdeMO e potenza massima 100 Kw
         Colonnina c4 = new Colonnina("C4", "Type 2", 22, true); // Colonnina con connettore Type2 e potenza massima 22 Kw    }
+        Colonnina c5 = new Colonnina("C5", "CCS", 100, true); // Colonnina con connettore CCS e potenza massima 50 Kw (non disponibile)
 
         // Creazione stazione di ricarica con le colonnine
-        Colonnina[] colonnina = {c1, c2, c3, c4};
+        Colonnina[] colonnina = {c0,c1, c2, c3, c4, c5};
         StazioneRicarica s1 = new StazioneRicarica("s1", "Stazione Orbassano via Roma", 45.0055, 7.5381, colonnina);
 
         // Creazione veicoli elettrici
@@ -17,7 +19,7 @@ public class Main {
                 .conCapacitaBatteria(75)
                 .conBatteriaAttuale(6)
                 .conPotenzaRicarica(50)
-                .conConnettore("CHAdeMO")
+                .conConnettore("ChademO")
                 .build();
 
         VeicoloElettrico v2 = new VeicoloElettrico.Builder("ZO000EE")
@@ -30,7 +32,14 @@ public class Main {
                 .conCapacitaBatteria(120)
                 .conBatteriaAttuale(55)
                 .conPotenzaRicarica(100)
-                .conConnettore("CCS")
+                .conConnettore("ccs")
+                .build();
+
+        VeicoloElettrico v4 = new VeicoloElettrico.Builder("FI500AT")
+                .conCapacitaBatteria(60)
+                .conBatteriaAttuale(16)
+                .conPotenzaRicarica(30)
+                .conConnettore("CHAdeMO")
                 .build();
 
         // Simulazione ricarica dei veicoli
@@ -38,6 +47,7 @@ public class Main {
             s1.assegnaColonnina(v1); // Assegna una colonnina al veicolo v1
             s1.assegnaColonnina(v2); // Assegna una colonnina al veicolo v2
             s1.assegnaColonnina(v3); // Assegna una colonnina al veicolo v3
+            s1.assegnaColonnina(v4); // Assegna una colonnina al veicolo v4
         } catch (IllegalStateException e) {
             System.out.println("Errore durante l'assegnazione della colonnina: " + e.getMessage());
         }
