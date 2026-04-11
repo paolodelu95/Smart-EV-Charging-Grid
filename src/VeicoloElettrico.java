@@ -1,24 +1,20 @@
 
-public class VeicoloElettrico {
+import java.time.LocalDateTime;
+public class VeicoloElettrico extends Veicolo {
 
-    private final String targa; // Identificativo univoco del veicolo
-    private final double capacitaBatteria; // Capacità totale della batteria in kWh
+    private double capacitaBatteria; // Capacità totale della batteria in kWh
     private double batteriaAttuale; // Percentuale attuale della batteria (0-100)
-    private final boolean inCarica; // Indica se il veicolo è attualmente in carica
+    private boolean inCarica; // Indica se il veicolo è attualmente in carica
     private double potenzaRicarica; // Potenza di ricarica accettata in kW 
-    private final String connettore; // Tipo di connettore supportato (es. Type 2, CCS, CHAdeMO)
+    private String connettore; // Tipo di connettore supportato (es. Type 2, CCS, CHAdeMO)
 
     private VeicoloElettrico(Builder builder) {
-        this.targa = builder.targa;
+        super(builder.targa, LocalDateTime.now(), builder.ticketNumber);
         this.capacitaBatteria = builder.capacitaBatteria;
         this.batteriaAttuale = builder.batteriaAttuale;
         this.inCarica = builder.inCarica;
         this.potenzaRicarica = builder.potenzaRicarica;
         this.connettore = builder.connettore;
-    }
-
-    public String getTarga() {
-        return targa;
     }
 
     public double getCapacitaBatteria() {
@@ -42,6 +38,10 @@ public class VeicoloElettrico {
         return connettore;
     }
 
+    public void setTipoConnettore(String connettore) {
+        this.connettore = connettore;
+    }
+
     public void setPercentualeBatteriaAttuale(double batteriaAttuale) {
         if (batteriaAttuale < 0 || batteriaAttuale > 100) {
             throw new IllegalArgumentException("La percentuale della batteria deve essere compresa tra 0 e 100");
@@ -52,14 +52,22 @@ public class VeicoloElettrico {
     public static class Builder {
 
         private String targa;
+        private int ticketNumber;
         private double capacitaBatteria;
         private double batteriaAttuale;
         private boolean inCarica;
         private double potenzaRicarica;
         private String connettore;
 
-        public Builder(String targa) {
+        public Builder(String targa, LocalDateTime localDateTime, int ticketNumber) {
             this.targa = targa;
+            this.ticketNumber = ticketNumber;
+        }
+
+
+        public Builder ticketNumber(int ticket) {
+            this.ticketNumber = ticket;            
+            return this;
         }
 
         public Builder conCapacitaBatteria(double capacitaBatteria) {
