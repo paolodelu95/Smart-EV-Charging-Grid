@@ -65,7 +65,7 @@ public class Garage {
     public double calcolaTariffa(Veicolo v) {
 
         for (int i = 0; i < postiOccupati; i++) {
-            if (posti[i].getTarga().equals(v.getTarga())) {
+            if (Veicolo.getTicketNumber() == Veicolo.getTicketNumber()) {
                 LocalDateTime oraIngresso = posti[i].getOraIngresso();
                 LocalDateTime oraUscita = LocalDateTime.now().plusHours(1); // Placeholder, in un'applicazione reale, l'ora di uscita dovrebbe essere registrata al momento della rimozione del veicolo
                 long secondiParcheggio = java.time.Duration.between(oraIngresso, oraUscita).toSeconds() % 3600;
@@ -85,6 +85,14 @@ public class Garage {
         return 0.0; //Veicolo non trovato
     }
 
+    public String visualizzaPostiOccupati() {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < postiOccupati; i++) {
+            sb.append(posti[i].getTarga()).append(" ").append(posti[i].getOraIngresso()).append(" ").append(Veicolo.getTicketNumber()).append("\n");
+        }
+        return sb.toString().trim();
+    }
+
     public String getPosti(int p) {
         return posti[p].getTarga();
     }
@@ -95,7 +103,7 @@ public class Garage {
 
     public int generateTicketNumber() {
         int randomTicketNumber = (int) (Math.random() * 1000000); // Genera un numero di ticket casuale tra 0 e 999999
-        if (randomTicketNumber < 100000) { // Assicurati che il numero di ticket sia sempre a 6 cifre
+        if (randomTicketNumber < 100000) { // Assicura che il numero di ticket sia sempre a 6 cifre
             randomTicketNumber += 100000;
         }
         for (int i = 0; i < postiOccupati; i++) {

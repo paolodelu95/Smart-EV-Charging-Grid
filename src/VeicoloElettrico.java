@@ -1,8 +1,9 @@
 
 import java.time.LocalDateTime;
+
 public class VeicoloElettrico extends Veicolo {
 
-    private double capacitaBatteria; // Capacità totale della batteria in kWh
+    private final double capacitaBatteria; // Capacità totale della batteria in kWh
     private double batteriaAttuale; // Percentuale attuale della batteria (0-100)
     private boolean inCarica; // Indica se il veicolo è attualmente in carica
     private double potenzaRicarica; // Potenza di ricarica accettata in kW 
@@ -24,12 +25,15 @@ public class VeicoloElettrico extends Veicolo {
     public double getPercentualeBatteriaAttuale() {
         return batteriaAttuale;
     }
+
     public boolean isInCarica() {
         return inCarica;
     }
+
     public double getPotenzaRicarica() {
         return potenzaRicarica;
     }
+
     public void setPotenzaRicarica(double potenzaRicarica) {
         this.potenzaRicarica = potenzaRicarica;
     }
@@ -49,6 +53,16 @@ public class VeicoloElettrico extends Veicolo {
         this.batteriaAttuale = batteriaAttuale;
     }
 
+    public static void iniziaRicarica(VeicoloElettrico veicolo) {
+        if (veicolo.getPercentualeBatteriaAttuale() >= 100) {
+            System.out.println("La batteria del veicolo " + veicolo.getTarga() + " è già completamente carica.");
+            return;
+        }
+
+        veicolo.inCarica = true;
+
+    }
+
     public static class Builder {
 
         private String targa;
@@ -64,9 +78,8 @@ public class VeicoloElettrico extends Veicolo {
             this.ticketNumber = ticketNumber;
         }
 
-
         public Builder ticketNumber(int ticket) {
-            this.ticketNumber = ticket;            
+            this.ticketNumber = ticket;
             return this;
         }
 
@@ -84,8 +97,9 @@ public class VeicoloElettrico extends Veicolo {
             this.potenzaRicarica = potenzaRicarica;
             return this;
         }
+
         public Builder conConnettore(String connettore) {
-            this.connettore = connettore;            
+            this.connettore = connettore;
             return this;
         }
 
@@ -104,6 +118,20 @@ public class VeicoloElettrico extends Veicolo {
             }
             return new VeicoloElettrico(this);
         }
-    }
 
+        public VeicoloElettrico generaVeicoloElettricoRandom() {
+            capacitaBatteria = 50 + Math.random() * 100; // Capacità tra 50 e 150 kWh
+            batteriaAttuale = Math.random() * 100; // Percentuale tra 0 e 100
+            potenzaRicarica = 22 + Math.random() * 78; // Potenza tra 22 e 100 kW
+            String[] connettori = {"Type 2", "CCS", "CHAdeMO"};
+            connettore = connettori[(int) (Math.random() * connettori.length)];
+            return new VeicoloElettrico.Builder("AA000AA", LocalDateTime.now(), 0)
+                    .conCapacitaBatteria(capacitaBatteria)
+                    .conBatteriaAttuale(batteriaAttuale)
+                    .conPotenzaRicarica(potenzaRicarica)
+                    .conConnettore(connettore)
+                    .build();
+        }
+
+    }
 }
