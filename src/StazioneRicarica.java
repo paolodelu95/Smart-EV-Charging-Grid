@@ -82,7 +82,6 @@ public class StazioneRicarica {
     }
 
     public void setColonnine(Colonnina[] colonnine2) {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'setColonnine'");
     }
 

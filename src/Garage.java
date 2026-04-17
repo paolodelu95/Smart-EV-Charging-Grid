@@ -33,7 +33,7 @@ public class Garage {
 
     public double rimuovi(int ticket) {
         for (int i = 0; i < postiOccupati; i++) {
-            if (posti[i].getTicketNumber() == ticket) {
+            if (Veicolo.getTicketNumber() == ticket) {
                 double tariffa = calcolaTariffa(posti[i]);
                 for (int j = i; j < postiOccupati - 1; j++) {
                     posti[j] = posti[j + 1];
@@ -100,7 +100,7 @@ public class Garage {
         }
         for (int i = 0; i < postiOccupati; i++) {
 
-            if (posti[i].getTicketNumber() == randomTicketNumber) {
+            if (Veicolo.getTicketNumber() == randomTicketNumber) {
                 return generateTicketNumber(); // Se il numero di ticket è già in uso, genera un nuovo numero
             }
         }
@@ -111,7 +111,7 @@ public class Garage {
     public int getTicketNumber(String targa) {
         for(int i=0; i < postiOccupati; i++) {
             if(posti[i].getTarga().equals(targa)) {
-                return posti[i].getTicketNumber();
+                return Veicolo.getTicketNumber();
             }
         }
         return -1; // Veicolo non trovato   
@@ -119,7 +119,7 @@ public class Garage {
 
     public String getTarga(int ticket) {
         for(int i = 0; i < postiOccupati; i++) {
-            if(posti[i].getTicketNumber() == ticket){
+            if(Veicolo.getTicketNumber() == ticket){
                 return posti[i].getTarga();
             }
         }

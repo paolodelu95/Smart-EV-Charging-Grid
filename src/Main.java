@@ -71,7 +71,7 @@ public class Main {
                                     throw new IllegalStateException("Scelta non valida. Seleziona un'opzione tra 1 e 3.");
                             }
                             if (s1.assegnaColonnina(v1)) {
-                                System.out.println("Il ticket del tuo veicolo è: " + v1.getTicketNumber());
+                                System.out.println("Il ticket del tuo veicolo è: " + Veicolo.getTicketNumber());
                             } else {
                                 System.out.println("Non è stato possibile parcheggiare il veicolo " + v1.getTarga());
                             }
@@ -87,7 +87,7 @@ public class Main {
                     String targaUpper = targa.toUpperCase();
                     if (garage.parcheggia(v1)) {
                         System.out.println("Veicolo " + targaUpper + " parcheggiato con successo.");
-                        System.out.println("Il ticket del tuo veicolo è: " + v1.getTicketNumber());
+                        System.out.println("Il ticket del tuo veicolo è: " + Veicolo.getTicketNumber());
                     } else {
                         System.out.println("Non è stato possibile parcheggiare il veicolo " + targaUpper + ".");
                     }
