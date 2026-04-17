@@ -68,7 +68,7 @@ public class Main {
 
                     if (garage.parcheggia(v1)) {
                         System.out.println("Veicolo " + targaUpper + " parcheggiato con successo.");
-                        System.out.println("Il ticket del tuo veicolo è: " + Veicolo.getTicketNumber());
+                        System.out.println("Il ticket del tuo veicolo è: " + v1.getTicketNumber());
                     } else {
                         System.out.println("Non è stato possibile parcheggiare il veicolo " + targaUpper + ".");
                     }

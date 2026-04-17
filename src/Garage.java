@@ -33,7 +33,7 @@ public class Garage {
 
     public double rimuovi(int ticket) {
         for (int i = 0; i < postiOccupati; i++) {
-            if (Veicolo.getTicketNumber() == ticket) {
+            if (posti[i].getTicketNumber() == ticket) {
                 double tariffa = calcolaTariffa(posti[i]);
                 for (int j = i; j < postiOccupati - 1; j++) {
                     posti[j] = posti[j + 1];
@@ -65,7 +65,7 @@ public class Garage {
     public double calcolaTariffa(Veicolo v) {
 
         for (int i = 0; i < postiOccupati; i++) {
-            if (Veicolo.getTicketNumber() == Veicolo.getTicketNumber()) {
+            if (posti[i].getTicketNumber() == v.getTicketNumber()) {
                 LocalDateTime oraIngresso = posti[i].getOraIngresso();
                 LocalDateTime oraUscita = LocalDateTime.now().plusHours(1); // Placeholder, in un'applicazione reale, l'ora di uscita dovrebbe essere registrata al momento della rimozione del veicolo
                 long secondiParcheggio = java.time.Duration.between(oraIngresso, oraUscita).toSeconds() % 3600;
@@ -88,7 +88,7 @@ public class Garage {
     public String visualizzaPostiOccupati() {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < postiOccupati; i++) {
-            sb.append(posti[i].getTarga()).append(" ").append(posti[i].getOraIngresso()).append(" ").append(Veicolo.getTicketNumber()).append("\n");
+            sb.append(posti[i].getTarga()).append(" ").append(posti[i].getOraIngresso()).append(" ").append(posti[i].getTicketNumber()).append("\n");
         }
         return sb.toString().trim();
     }
@@ -108,7 +108,7 @@ public class Garage {
         }
         for (int i = 0; i < postiOccupati; i++) {
 
-            if (Veicolo.getTicketNumber() == randomTicketNumber) {
+            if (posti[i].getTicketNumber() == randomTicketNumber) {
                 return generateTicketNumber(); // Se il numero di ticket è già in uso, genera un nuovo numero
             }
         }
@@ -119,7 +119,7 @@ public class Garage {
     public int getTicketNumber(String targa) {
         for(int i=0; i < postiOccupati; i++) {
             if(posti[i].getTarga().equals(targa)) {
-                return Veicolo.getTicketNumber();
+                return posti[i].getTicketNumber();
             }
         }
         return -1; // Veicolo non trovato   
@@ -127,7 +127,7 @@ public class Garage {
 
     public String getTarga(int ticket) {
         for(int i = 0; i < postiOccupati; i++) {
-            if(Veicolo.getTicketNumber() == ticket){
+            if(posti[i].getTicketNumber() == ticket){
                 return posti[i].getTarga();
             }
         }

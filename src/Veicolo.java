@@ -5,12 +5,12 @@ public class Veicolo {
 
     private final String targa;
     private final LocalDateTime oraIngresso;
-    private static int ticketNumber;
+    private int ticketNumber;
 
     public Veicolo(String targa, LocalDateTime oraIngresso, int ticketNumber) {
         this.targa = targa;
         this.oraIngresso = oraIngresso;
-        Veicolo.ticketNumber = ticketNumber;
+        this.ticketNumber = ticketNumber;
     }
 
     public String getTarga() {
@@ -21,7 +21,7 @@ public class Veicolo {
         return oraIngresso;
     }
 
-    public static int getTicketNumber() {
+    public int getTicketNumber() {
         return ticketNumber;
     }
 
