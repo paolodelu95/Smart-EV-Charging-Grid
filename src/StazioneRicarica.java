@@ -85,4 +85,15 @@ public class StazioneRicarica {
         throw new UnsupportedOperationException("Unimplemented method 'setColonnine'");
     }
 
+        public static void iniziaRicarica(VeicoloElettrico veicolo) {
+        VeicoloElettrico v = veicolo;
+        if (veicolo.getPercentualeBatteriaAttuale() >= 100) {
+            System.out.println("La batteria del veicolo " + veicolo.getTarga() + " è già completamente carica.");
+            return;
+        }
+        v.isInCarica(); // Imposta lo stato del veicolo come in carica
+        System.out.println("Ricarica del veicolo " + veicolo.getTarga() + " in corso...");
+        
+    }
+
 }

@@ -42,6 +42,7 @@ public class VeicoloElettrico extends Veicolo {
         return connettore;
     }
 
+
     public void setTipoConnettore(String connettore) {
         this.connettore = connettore;
     }
@@ -51,16 +52,6 @@ public class VeicoloElettrico extends Veicolo {
             throw new IllegalArgumentException("La percentuale della batteria deve essere compresa tra 0 e 100");
         }
         this.batteriaAttuale = batteriaAttuale;
-    }
-
-    public static void iniziaRicarica(VeicoloElettrico veicolo) {
-        if (veicolo.getPercentualeBatteriaAttuale() >= 100) {
-            System.out.println("La batteria del veicolo " + veicolo.getTarga() + " è già completamente carica.");
-            return;
-        }
-
-        veicolo.inCarica = true;
-
     }
 
     public static class Builder {

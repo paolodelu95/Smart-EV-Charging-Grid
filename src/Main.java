@@ -50,7 +50,7 @@ public class Main {
                                 .build();
 
                             if (s1.assegnaColonnina(v1)) {
-                                //VeicoloElettrico.iniziaRicarica(v1);
+                                StazioneRicarica.getColonnine();
                                 System.out.println("Ricarica in corso per il veicolo " + v1.getTarga() + " con capacità batteria di " + String.format("%.2f", v1.getCapacitaBatteria()) + " kWh, batteria attuale al " + String.format("%.2f", v1.getPercentualeBatteriaAttuale()) + "%, potenza di ricarica di " + String.format("%.2f", v1.getPotenzaRicarica()) + " kW e connettore " + v1.getConnettore() + ".");
                                 System.out.println("Procediamo con il parcheggio del veicolo dopo la ricarica");
                             } else {

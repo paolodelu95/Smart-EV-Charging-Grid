@@ -5,7 +5,7 @@ public class Veicolo {
 
     private final String targa;
     private final LocalDateTime oraIngresso;
-    private int ticketNumber;
+    private final int ticketNumber;
 
     public Veicolo(String targa, LocalDateTime oraIngresso, int ticketNumber) {
         this.targa = targa;
