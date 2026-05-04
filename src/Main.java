@@ -66,7 +66,7 @@ public class Main {
                     String targaUpper = targa.toUpperCase();
                     Veicolo v1 = new Veicolo(targaUpper, LocalDateTime.now(), garage.generateTicketNumber());
 
-                    if (garage.parcheggia(v1)) {
+                    if (garage.parcheggiaVeicolo(v1)) {
                         System.out.println("Veicolo " + targaUpper + " parcheggiato con successo.");
                         System.out.println("Il ticket del tuo veicolo è: " + v1.getTicketNumber());
                     } else {
@@ -77,11 +77,18 @@ public class Main {
                     System.out.println("Inserisci il ticket:");
                     int ticket = input.nextInt();
                     input.nextLine(); // Consuma il newline rimasto
+                    double tariffa = garage.calcolaTariffa(ticket);
                     String targaCorrispondente = garage.getTarga(ticket);
-                    double tariffa = garage.rimuovi(ticket);
-                    double arrotondato = Math.round(tariffa * 100.0) / 100.0;
                     if (tariffa > 0) {
-                        System.out.println("Veicolo " + targaCorrispondente + " con ticket n. " + ticket + " rimosso con successo. Tariffa da pagare: " + arrotondato + "€");
+                        System.out.println("Veicolo " + targaCorrispondente + " con ticket n. " + ticket + "in uscita. Tariffa da pagare: " + tariffa + "€");
+                        System.out.println("Vuoi pagare il ticket? (s/n)");
+                        String risposta = input.nextLine();
+                        if (risposta.equalsIgnoreCase("s")) {
+                            garage.pagaBiglietto(ticket);
+                            garage.apriSbarre(ticket);
+                        }else {
+                            System.out.println("Pagamento annullato. Il veicolo " + targaCorrispondente + " con ticket n. " + ticket + " non può uscire finché il pagamento non è completato.");
+                        }
                     } else {
                         System.out.println("Non è stato possibile trovare il veicolo con ticket " + ticket + " per la rimozione.");
                     }

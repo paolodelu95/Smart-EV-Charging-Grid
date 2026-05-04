@@ -13,6 +13,7 @@ public class Garage {
     private final double tariffaWeekend;
     private int ticketVenduti = 0;
     private final Queue<Veicolo> codaVeicoli = new LinkedList<>();
+    private Queue<Integer> ticketPagati = new LinkedList<>();
 
     public Garage(String nome, int numeroPosti, double tariffaOraria, double tariffaWeekend) {
         this.nome = nome;
@@ -23,7 +24,7 @@ public class Garage {
         posti = new Veicolo[numeroPosti];
     }
 
-    public boolean parcheggia(Veicolo v) {
+    public boolean parcheggiaVeicolo(Veicolo v) {
         if (postiOccupati < numeroPosti) {
             posti[postiOccupati] = v;
             postiOccupati++;
@@ -34,19 +35,17 @@ public class Garage {
         return false;
     }
 
-    public double rimuovi(int ticket) {
+    public void rimuoviVeicolo(int ticket) {
         for (int i = 0; i < postiOccupati; i++) {
             if (posti[i].getTicketNumber() == ticket) {
-                double tariffa = calcolaTariffa(posti[i]);
                 for (int j = i; j < postiOccupati - 1; j++) {
                     posti[j] = posti[j + 1];
                 }
                 posti[postiOccupati - 1] = null; // Libera l'ultimo
                 postiOccupati--;
-                return tariffa;
-            }
+                ticketPagati.remove(ticket); // Rimuove il ticket dalla lista dei pagati
+                return;}
         }
-        return 0.0; //Veicolo non trovato
     }
 
     public int getPostiDisponibili() {
@@ -65,10 +64,10 @@ public class Garage {
         return tariffaWeekend;
     }
 
-    public double calcolaTariffa(Veicolo v) {
+    public double calcolaTariffa(int ticket) {
 
         for (int i = 0; i < postiOccupati; i++) {
-            if (posti[i].getTicketNumber() == v.getTicketNumber()) {
+            if (posti[i].getTicketNumber() == ticket) {
                 LocalDateTime oraIngresso = posti[i].getOraIngresso();
                 LocalDateTime oraUscita = LocalDateTime.now().plusHours(1); // Placeholder, in un'applicazione reale, l'ora di uscita dovrebbe essere registrata al momento della rimozione del veicolo
                 long secondiParcheggio = java.time.Duration.between(oraIngresso, oraUscita).toSeconds() % 3600;
@@ -78,13 +77,13 @@ public class Garage {
                     secondiParcheggio += 60; // Aggiungi un minuto per ogni minuto parziale
                 }
                 if (oraIngresso.getDayOfWeek().getValue() >= 6) { //Weekend
-                    return secondiParcheggio * tariffaWeekend;
+                    return Math.round(secondiParcheggio * tariffaWeekend*100)/100;
                 } else {
-                    return secondiParcheggio * tariffaOraria;
+                    return Math.round(secondiParcheggio * tariffaOraria*100)/100;
                 }
             }
         }
-        System.out.println("Veicolo " + v.getTarga() + " non trovato nel garage.");
+        System.out.println("Veicolo con ticket " + ticket + " non trovato nel garage.");
         return 0.0; //Veicolo non trovato
     }
 
@@ -151,15 +150,20 @@ public class Garage {
     }
 
     public void pagaBiglietto(int ticket) {
-        for (int i = 0; i < postiOccupati; i++) {
-            if (posti[i].getTicketNumber() == ticket) {
-                double tariffa = calcolaTariffa(posti[i]);
-                double arrotondato = Math.round(tariffa * 100.0) / 100.0;
-                System.out.println("Il biglietto del veicolo " + posti[i].getTarga() + " con ticket n. " + ticket + " è stato pagato. Tariffa da pagare: " + arrotondato + "€");
-                return;
-            }
+        ticketPagati.add(ticket);
+    }
+
+    public boolean isTicketPagato(int ticket) {
+        return ticketPagati.contains(ticket);
+    }
+
+    public void apriSbarre(int ticket) {
+        if(isTicketPagato(ticket)) {
+            System.out.println("Sbarre aperte per il ticket " + ticket);
+            rimuoviVeicolo(ticket);
+        }else {
+            System.out.println("Il ticket " + ticket + " non è stato pagato. Impossibile aprire le sbarre.");
         }
-        System.out.println("Non è stato possibile trovare il veicolo con ticket " + ticket + " per il pagamento.");
     }
 
 }
