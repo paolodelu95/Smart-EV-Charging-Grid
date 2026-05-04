@@ -20,7 +20,7 @@ public class Main {
             System.out.println("__".repeat(50));
             System.out.println("__".repeat(50));
             System.out.println("  ".repeat(50));
-            System.out.println("Che cosa vuoi fare? \n1: Parcheggiare un veicolo, \n2: Rimuovere un veicolo, \n3: Visualizzare veicoli parcheggiati, \n4: Uscire");
+            System.out.println("Che cosa vuoi fare? \n1: Parcheggiare un veicolo, \n2: Rimuovere un veicolo, \n3: Visualizzare veicoli parcheggiati, \n4: Metti in coda un veicolo, \n5: Esci dalla coda, \n6: Visualizza coda, \n7: Esci");
             System.out.println("  ".repeat(50));
             int scelta = input.nextInt();
             input.nextLine(); // Consuma il newline rimasto
@@ -88,14 +88,39 @@ public class Main {
                 }
                 case 3 ->
                     System.out.println("Veicoli parcheggiati: \n" + garage.visualizzaPostiOccupati());
-
+                
                 case 4 -> {
+                    System.out.println("Inserisci la targa del veicolo da mettere in coda: ES: AA123BB");
+                    String targa = input.nextLine();
+                    String targaUpper = targa.toUpperCase();
+                    Veicolo v1 = new Veicolo(targaUpper, LocalDateTime.now(), garage.generateTicketNumber());
+                    garage.mettiInCoda(v1);
+                    System.out.println("Veicolo " + targaUpper + " messo in coda con successo.");
+                }
+                case 5 -> {
+                    Veicolo v = garage.esciDallaCoda();
+                    if (v != null) {
+                        System.out.println("Veicolo " + v.getTarga() + " uscito dalla coda.");
+                    } else {
+                        System.out.println("La coda è vuota, nessun veicolo da far uscire.");
+                    }
+                }
+                case 6 -> {
+                    Veicolo[] coda = garage.getCoda();
+                    System.out.println("Veicoli in coda:");
+                    for (Veicolo veicolo : coda) {
+                        if (veicolo != null) {
+                            System.out.println("- " + veicolo.getTarga());
+                        }
+                    }
+                }
+                case 7 -> {
                     System.out.println("Grazie per aver utilizzato il " + garage.getNome() + ". Arrivederci!");
                     acceso = false;
                 }
 
                 default ->
-                    System.out.println("Scelta non valida. Per favore, seleziona un'opzione tra 1 e 4.");
+                    System.out.println("Scelta non valida. Per favore, seleziona un'opzione tra 1 e 7.");
 
             }
         }

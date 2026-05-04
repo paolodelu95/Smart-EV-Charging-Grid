@@ -1,5 +1,7 @@
 
 import java.time.LocalDateTime;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class Garage {
 
@@ -10,6 +12,7 @@ public class Garage {
     private final double tariffaOraria; //in realtà consideriamo la tariffa al secondo, ma per semplicità la chiamiamo tariffa oraria
     private final double tariffaWeekend;
     private int ticketVenduti = 0;
+    private final Queue<Veicolo> codaVeicoli = new LinkedList<>();
 
     public Garage(String nome, int numeroPosti, double tariffaOraria, double tariffaWeekend) {
         this.nome = nome;
@@ -132,6 +135,31 @@ public class Garage {
             }
         }
         return null;
+    }
+
+    public void mettiInCoda(Veicolo v){
+        codaVeicoli.add(v);
+    }
+
+    public Veicolo esciDallaCoda(){
+        return codaVeicoli.poll();
+    }
+
+    public Veicolo[] getCoda() {
+        return codaVeicoli.toArray(new Veicolo[0]);
+
+    }
+
+    public void pagaBiglietto(int ticket) {
+        for (int i = 0; i < postiOccupati; i++) {
+            if (posti[i].getTicketNumber() == ticket) {
+                double tariffa = calcolaTariffa(posti[i]);
+                double arrotondato = Math.round(tariffa * 100.0) / 100.0;
+                System.out.println("Il biglietto del veicolo " + posti[i].getTarga() + " con ticket n. " + ticket + " è stato pagato. Tariffa da pagare: " + arrotondato + "€");
+                return;
+            }
+        }
+        System.out.println("Non è stato possibile trovare il veicolo con ticket " + ticket + " per il pagamento.");
     }
 
 }
